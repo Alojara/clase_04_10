@@ -1,0 +1,14 @@
+<ion-card *ngIf="pokemon" [routerLink]="['',pokemon.name]">
+  <img [src]="pokemon.sprites.front_default"/>
+  <ion-card-header>
+    <ion-card-title>{{pokemon.name}}</ion-card-title>
+    <ion-card-subtitle>Nº : {{pokemon.order}}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item *ngFor="let stat of pokemon.stats">
+        {{stat.stat.name}} -> {{stat.base_stat}}
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>

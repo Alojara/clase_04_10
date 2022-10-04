@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>pokemones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-template #cargando>
+    <ion-progress-bar  type="indeterminate"></ion-progress-bar>
+  </ng-template>
+  <ng-template #losDatos>
+
+    <!--
+    <form [formGroup]="formulario" novalidate>
+      <ion-searchbar
+      search-icon="search-circle"
+      placeholder="Custom Search Icon"
+      formControlName="nombrePokemon">
+      </ion-searchbar>
+      {{ formulario.get('nombrePokemon').valid}}
+      {{ formulario.get('nombrePokemon').value}}
+      {{ formulario.get('nombrePokemon').errors | json}}
+    </form>
+    -->
+    <form [formGroup] = "formulario" novalidate>
+      <ion-searchbar
+
+      formControlName = "nombrePokemon"
+      ></ion-searchbar>
+
+      <ion-label
+      *ngIf="!formulario.get('nombrePokemon').valid &&
+      formulario.get('nombrePokemon').errors.required &&
+      formulario.get('nombrePokemon').touched
+
+      "
+      color = "red"
+      >
+      </ion-label>
+      <ion-label>
+        *ngIf="!formulario.get('nombrePokemon').valid &&
+      formulario.get('nombrePokemon').errors.maxLength &&
+      formulario.get('nombrePokemon').touched
+
+      "
+      </ion-label>
+
+
+
+      {{ formulario.get('nombrePokemon').valid}}
+      <br>
+      {{ formulario.get('nombrePokemon').value}}
+      <br>
+      {{ formulario.get('nombrePokemon').errors | json}}
+
+    </form>
+
+
+    <!--Lista-->
+    <app-info-pokemon
+      *ngFor="let info of obtenerPokemon.informaciones"
+      [url]="info.url"
+    ></app-info-pokemon>
+    <!--scroll infinito, va despues de la lista-->
+    <ion-infinite-scroll (ionInfinite)="cargarMasPokemones($event)">
+      <ion-infinite-scroll-content
+      [loadingSpinner]= "'dots'"
+      [loadingText]= "'Cargando pokedex'"
+      >
+
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+  </ng-template>
+  <p *ngIf="obtenerPokemon.informaciones; then losDatos else cargando"></p>
+  <!-- Template Reference -->
+
+</ion-content>
